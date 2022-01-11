@@ -61,8 +61,6 @@ material.node_tree.links.new(bsdf_node.inputs[0], input_node.outputs[0])
 
 print('Add texture image')
 texture_node = nodes.new('ShaderNodeTexImage')
-texture_node.select = True
-nodes.active = texture_node
 
 print('Create empty image')
 image = bpy.data.images.new(name='SomeImage', width=1024, height=1024)
@@ -77,17 +75,15 @@ print('Select active material')
 bpy.context.active_object.active_material = material
 
 print('Bake image')
-bpy.context.scene.cycles.bake_type = 'DIFFUSE'
-bpy.context.scene.render.bake.use_pass_direct = False
-bpy.context.scene.render.bake.use_pass_indirect = False
 bpy.context.view_layer.objects.active = bpy.context.active_object
-print(bpy.ops.object.bake(type='DIFFUSE',
-      pass_filter={'COLOR'}, use_clear=True))
+bpy.ops.object.bake(type='DIFFUSE',
+                    pass_filter={'COLOR'}, use_clear=True)
 
 print('Save image')
 image.save_render(output_png)
 
 # set map_Kd correctly in mtl file
+print('Set image path')
 image.filepath = os.path.basename(output_png)
 
 print('Connect texture node to bsdf')
