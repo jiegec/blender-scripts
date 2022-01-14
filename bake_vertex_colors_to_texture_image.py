@@ -1,5 +1,5 @@
 # Bake vertex colors to texture image
-# Run with: blender -b -P bake_vertex_colors_to_texture_image.py -- input_ply output_obj
+# Run with: blender -b -P bake_vertex_colors_to_texture_image.py -- INPUT_PLY OUTPUT_OBJ
 # Tested with blender 3.0.0
 # Input: PLY format with vertex color attributes i.e. rgb channels
 # Output: OBJ format with texture image
@@ -13,14 +13,14 @@ index = sys.argv.index('--')
 
 parser = argparse.ArgumentParser(
     description='Bake vertex colors to texture image')
-parser.add_argument('input_ply', type=str,
+parser.add_argument('INPUT_PLY', type=str,
                     help='Input PLY File')
-parser.add_argument('output_obj', type=str,
+parser.add_argument('OUTPUT_OBJ', type=str,
                     help='Output OBJ File')
 
 args = parser.parse_args(sys.argv[index:])
-input_ply = args.input_ply
-output_obj = args.output_obj
+input_ply = args.INPUT_PLY
+output_obj = args.OUTPUT_OBJ
 name, _ = os.path.splitext(output_obj)
 output_png = '{}.png'.format(name)
 output_mtl = '{}.mtl'.format(name)
